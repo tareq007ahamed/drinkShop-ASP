@@ -1,0 +1,26 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Oops. There is a problem.</h1>
+
+@{
+
+
+    var word = string.Empty;
+    if (@Model.SerchingTerm.Length <= 1)
+    {
+        <h2 class="text-danger">No beverage contains letter "@Model.SerchingTerm".</h2>
+    }
+    else if (@Model.SerchingTerm.Length <= 3)
+    {
+        <h2 class="text-danger">No beverage contains syllable "@Model.SerchingTerm".</h2>
+    }
+    else
+    {
+        <h2 class="text-danger">No beverage contains word "@Model.SerchingTerm".</h2>
+    }
+
+    <h2 class="text-danger">Try again with different criteria. Or <a asp-controller="About" asp-action="AboutUs">Contact us </a> via email to add the desired drink.</h2>
+}

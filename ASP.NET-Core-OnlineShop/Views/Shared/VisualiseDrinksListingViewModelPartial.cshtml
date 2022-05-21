@@ -1,0 +1,68 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IPagedList<DrinksListingViewModel>
+<head>
+    <link rel="stylesheet" href="~/css/DrinkListing.css">
+</head>
+
+<div class="container-fluid mt-50">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4">
+                <div class="product-card mb-30">
+                    <a class="product-thumb" asp-controller="Drinks" asp-action="Details" asp-route-id="@item.Id" data-abc="true" data-abc="true"><img src="@item.ImageThumbnailUrl" alt="Product"></a>
+                    <div class="product-card-body">
+
+
+                        <div class="product-category "><a style="color:#dc3545" data-abc="true">@item.Category</a></div>
+
+
+
+                        <h3 class="product-title"><a asp-controller="Drinks" asp-action="Details" asp-route-id="@item.Id" data-abc="true">@item.Name</a></h3>
+
+                        <h6 class="product-title"><h6 data-abc="true">@item.ShortDescription</h6></h6>
+
+                        <h4 class="product-price">@item.Price.ToString("C", CultureInfo.GetCultureInfo("bg-BG"))</h4>
+                    </div>
+                    <div class="product-button-group">
+
+                        @if (User.IsInRole(AdministratorRoleName) && User.Identity.IsAuthenticated)
+                        {
+                            <a asp-area="Admin" asp-controller="Drinks" asp-action="Delete" asp-route-id="@item.Id" class="product-button btn-outline-danger data-abc="true">
+                                <button class="btn btn">Delete</button>
+                            </a>
+                            <a asp-area="Admin" asp-controller="Drinks" asp-action="Edit" asp-route-id="@item.Id" class="product-button btn-outline-warning data-abc="true">
+                                <button class="btn btn">Edit</button>
+                            </a>
+                            <a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-drinkId="@item.Id" class="product-button btn-outline-success data-abc="true">
+                                <button class="btn btn">Buy</button>
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a class="product-button btn-outline-success id=" cartButton" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-drinkId="@item.Id" data-abc="true">
+                                <button class="btn btn">Buy</button>
+                            </a>
+
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('ul.pagination > li.disabled > a').addClass('page-link');
+        });
+    </script>
+}
